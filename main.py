@@ -23,7 +23,7 @@ def render_progressbar(total, iteration, prefix='', suffix='',
     return '{0} |{1}| {2}% {3}'.format(prefix, pbar, percent, suffix)
 
 
-def notify_progress(time_left, user_id, message_id):
+def notify_progress(time_left, user_id, message_id, sended_time):
     if time_left < sended_time:
         bot.update_message(user_id, message_id, 
                            render_progressbar(sended_time, 
@@ -34,14 +34,13 @@ def notify_progress(time_left, user_id, message_id):
 
 
 def reply(user_id, message):
-    global sended_time
     sended_time = int(parse(message))
     message_id = bot.send_message(user_id, 
                                   render_progressbar(sended_time, 
                                                      0, 
                                                      'Осталось {} секунд'.format(sended_time)))
-    bot.create_countdown(sended_time, notify_progress, 
-                         user_id=user_id, message_id=message_id)
+    bot.create_countdown(sended_time, notify_progress, user_id=user_id, 
+                         message_id=message_id, sended_time=sended_time)
     
 
 def main():
