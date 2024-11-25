@@ -38,8 +38,8 @@ def reply(bot, user_id, message):
 
 def main():
     load_dotenv()
-    TG_TOKEN = os.getenv('TG_TOKEN')
-    bot = ptbot.Bot(TG_TOKEN)
+    tg_token = os.getenv('TG_TOKEN')
+    bot = ptbot.Bot(tg_token)
     bot.reply_on_message(lambda user_id, message: reply(bot, user_id, message))
     bot.run_bot()
 
